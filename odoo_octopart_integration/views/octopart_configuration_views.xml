@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_octopart_configuration_form" model="ir.ui.view">
+        <field name="name">octopart.configuration.form</field>
+        <field name="model">octopart.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Octopart Configuration">
+                <header>
+                    <button name="test_connection" string="Test Connection"
+                            type="object"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" icon="fa-archive" name="toggle_active" string="Archive" attrs="{'invisible': [('active', '=', False)]}"/>
+                        <button type="object" icon="fa-archive" name="toggle_active" string="Restore" attrs="{'invisible': [('active', '=', True)]}"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence" class="oe_inline"
+                                   readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="api_key" required="1"/>
+                        <field name="status" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_octopart_configuration_tree" model="ir.ui.view">
+        <field name="name">octopart.configuration.tree</field>
+        <field name="model">octopart.configuration</field>
+        <field name="arch" type="xml">
+            <tree string="Octopart Configuration"
+                  decoration-muted="active==False">
+                <field name="sequence"/>
+                <field name="api_key"/>
+                <field name="status"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_octopart_configuration_filter" model="ir.ui.view">
+        <field name="name">octopart.configuration.search</field>
+        <field name="model">octopart.configuration</field>
+        <field name="arch" type="xml">
+            <search string="Octopart Configuration">
+                <field name="sequence" string="Sequence"
+                       filter_domain="['|',('sequence','ilike',self)]"/>
+                <filter string="Active" name="active"
+                        domain="[('active','=',True)]"/>
+                <filter string="Archived" name="inactive"
+                        domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="octopart_configuration_action" model="ir.actions.act_window">
+        <field name="name">Octopart Configuration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">octopart.configuration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_octopart_configuration_filter"/>
+    </record>
+
+</odoo>

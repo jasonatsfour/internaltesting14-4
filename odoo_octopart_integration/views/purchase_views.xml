@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="purchase_order_form_inherited_octopart" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+<!--            <xpath-->
+<!--                    expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">-->
+<!--                <attribute name="force_save">1</attribute>-->
+<!--            </xpath>-->
+            <xpath
+                    expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                <field name="manual_override" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                <field name="octopart_price_fetched"
+                       widget="state_selection" readonly="1" force_save="1"/>
+                <field name="octopart_status" readonly="1" force_save="1"/>
+            </xpath>
+
+<!--            <xpath-->
+<!--                    expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">-->
+<!--                <attribute name="attrs">{'readonly':[('manual_override', '=', False)]}-->
+<!--                </attribute>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+</odoo>
