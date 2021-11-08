@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+© 2018-Today Aktiv Software (http://aktivsoftware.com/).
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Form View for Mrp Kanban Reordering -->
+    <record model="ir.ui.view" id="mrp_kanban_reordering_form_view">
+        <field name="name">mrp.kanban.reordering.form</field>
+        <field name="model">mrp.kanban.reordering</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type" required="1"/>
+                            <field name="create_delivery_scan" attrs="{'invisible': [('type', '!=', 'inter_warehouse')]}"/>
+                            <field name="product_id" context="{'type': type}" options="{'no_open': True, 'no_create': True}" required="1"/>
+                            <field name="product_tmpl_id" invisible="1"/>
+                            <field name="reorder_quantity" required="1"/>
+                            <field name="minimum_quantity"/>
+                            <field name="source_location" options="{'no_open': True, 'no_create': True}" domain="[('usage','=','internal')]" attrs="{'invisible': [('type', 'not in', ['internal_transfer','physical','inter_warehouse'])], 'required': [('type', 'in', ['internal_transfer','physical','inter_warehouse'])]}"/>
+                            <field name="destination_location" options="{'no_open': True, 'no_create': True}" domain="[('usage','=','internal')]" attrs="{'invisible': [('type', 'not in', ['internal_transfer','physical', 'inter_warehouse'])], 'required': [('type', 'in', ['internal_transfer','physical','inter_warehouse'])]}"/>
+                        </group>
+                        <group>
+                            <field name="barcode" readonly="1"/>
+                            <field name="card"/>
+                            <field name="card_count"/>
+                            <field name="validate_transfer_on_scan" attrs="{'invisible': [('type', '!=', 'internal_transfer')]}"/>
+                            <field name="auto_release_to_parsable" attrs="{'invisible': [('type', '!=', 'manufacturing_order')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!-- Tree View for Mrp Kanban Reordering -->
+    <record model="ir.ui.view" id="mrp_kanban_reordering_tree_view">
+        <field name="name">mrp.kanban.reordering.tree</field>
+        <field name="model">mrp.kanban.reordering</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="source_location"/>
+                <field name="destination_location"/>
+                <field name="reorder_quantity"/>
+                <field name="minimum_quantity"/>
+                <field name="card"/>
+                <field name="card_count"/>
+                <field name="barcode"/>
+                <field name="type"/>
+            </tree>
+        </field>
+    </record>
+
+<!-- Search view for Mrp Kanban Reordering -->
+   <!--  <record id="mrp_kanban_reordering_search" model="ir.ui.view">
+        <field name="name">mrp.kanban.reordering.search</field>
+        <field name="model">mrp.kanban.reordering</field>
+        <field name="type">search</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Mrp Kanban Reordering">
+                <field name="name" string="Name" domain="[('name','ilike', self)]"/>
+                <filter name="name" string="By Name" domain="[]" context="{'group_by':'name'}"/>
+            </search>
+        </field>
+    </record> -->
+
+<!-- Action for Kanban Cards -->
+    <record id="action_mrp_kanban_reordering" model="ir.actions.act_window">
+        <field name="name">Kanban Cards</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.kanban.reordering</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            Click to create new Kanban Cards.
+            </p>
+        </field>
+    </record>
+</odoo>

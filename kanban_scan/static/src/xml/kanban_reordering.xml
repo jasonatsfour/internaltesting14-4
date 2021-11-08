@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+<!--Kiosk Screen-->
+    <t t-name="MrpReorderingKanban">
+        <div class="container">
+            <div class="row">
+                <!--Kiosk Container-->
+                <div class="o_kfm_krr_kiosk_mode_container mx-auto">
+                    <!--Warning when Barcode Unmatched-->
+                    <div class="row mx-auto" id="barcode_unmatched">
+                        <div class="alert alert-danger">
+                            The scanned barcode is not a valid Barcode. Please check the barcode before scanning again.
+                        </div>
+                    </div>
+                    <!--Warning When Internal Transfer not set-->
+                    <div class="row mx-auto" id="not_internal_transfer">
+                        <div class="alert alert-danger">
+                            This Kanban Card is set up for Internal Goods Movements but no Operation Type has been specified in Inventory Configuration. Please specify an appropriate Operation Type before attempt to process this Kanban Card again.
+                        </div>
+                    </div>
+                    <!--Warning when Location not set-->
+                    <div class="row mx-auto" id="location_error">
+                        <div class="alert alert-danger">
+                            The move lines are not in a consistent states: they are doing an intercompany in a single step while they should go through the intercompany transit location.
+                        </div>
+                        <button type="button" id="picking_button" class="btn btn-primary">Open</button>
+                    </div>
+                    <!--MRP, Inter-Transfer, Interal Warehouse Created-->
+                    <div class="row mx-auto" id="mrp_created">
+                        <div class="col-xs-12 alert alert-success mx-auto">
+                            Created Successfully
+                            <div id="open_manufacturing_data">
+                                <span id="mrp_order">
+                                    <b>Click here to view created Manufacturing Order</b>
+                                    <span id="manuf_order_id"/>
+                                </span>
+                            </div>
+                            <div id="open_internal_transfer">
+                                <span id="internal">
+                                    <b>Click here to view created Internal Transfer</b>
+                                    <span id="internal_transfer_id"/>
+                                </span>
+                            </div>
+                            <div id="open_delivery_order">
+                                <span id="delivery">
+                                    <b>Click here to view created Delivery Order</b>
+                                    <span id="delivery_order_id"/>
+                                </span>
+                            </div>
+                            <div id="open_receipt_data">
+                                <span id="receipt">
+                                    <b>Click here to view created Receipt</b>
+                                    <span id="receipt_id"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-auto" id="receipt_val">
+                            <span id="receipt_validate">
+                                <div class="col-xs-12 alert alert-success mx-auto">
+                                    <div id="open_stock_receipt_data">
+                                        <b>Click here to view Validate Receipt</b>
+                                        <b><span id="stock_receipt"></span></b>
+                                    </div>
+                                </div>
+                            </span>
+                        <div class="row" id="receipt_not_validate">
+                            <div class="alert alert-danger">
+                               You can not validate receipt which is in done or cancel state
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--RFQ Created-->
+                    <div class="row mx-auto" id="rfq_created">
+                        <div class="col-xs-12 alert alert-success mx-auto">
+                            RFQ created successfully
+                            <div id="open_purchase_order_success">
+                                <b>Click here to view created Purchase Order</b>
+                                <b><span id="purchase_id"></span></b>
+                            </div>
+                        </div>
+                    </div>
+                    <!--RFQ Updated-->
+                    <div class="row mx-auto" id="rfq_updated">
+                        <div class="col-xs-12 alert alert-success mx-auto">
+                            RFQ updated successfully
+                            <div id="open_purchase_order_success">
+                                <b><span id="purchaseid"></span></b>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kisk Screen-->
+                    <div class="o_kfm_krr_kiosk_mode mx-auto">
+                        <h1 >Scan the barcode here</h1>
+                        <form>
+                            <div class="form-group">
+                              <input type="text" class="form-control barcode_field" id="barcode"/>
+                              <i class="fa fa-sign-in btn-primary o_barcode_kfm_krr_scan"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-auto" id="barcode_matched">
+                <div class="col-lg-offset-3 col-lg-7 col-xs-12 col-md-7 col-md-offset-1 col-sm-offset-3 col-sm-7 mx-auto" style="margin-top: -80px;">
+                    <h2>Kanban Reordering Rule Details</h2>
+                    <b>Product:</b> <span id="kfm_product"></span><br/>
+                    <b>Source Location:</b> <span id="kfm_source_loc"></span><br/>
+                    <b>Destination Location:</b> <span id="kfm_destination_loc"></span><br/>
+                    <b>Scheduled Date:</b> <span id="kfm_schedule_date"></span><br/>
+                    <b>Source Document:</b> <span id="kfm_name"></span><br/>
+                    <b>Operation Type:</b> <span id="kfm_type"></span><br/>
+                    <br/>
+                    <button type="button" id="confirm_button_kfm" class="btn btn-primary">Confirm</button>
+                    <button type="button" id="cancel_scan" class="btn btn-danger">Cancel</button>
+                    <div id="mrp_details">
+                        <h3>Manufacturing Details</h3>
+                        <table id='mrp_table' class="table table-fixed" style="overflow:auto; height:300px; width:600px; display:block;">
+                            <tr>
+                                <th>Number</th>
+                                <th>Source Location</th>
+                                <th>Destination Location</th>
+                                <th>Order Qty</th>
+                                <th id="schedule_date">Scheduled Date</th>
+                                <th id="delivery_state">Status</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- KRR -->
+            <div class="row mx-auto" id="barcode_matched_krr">
+                <div class="col-lg-offset-3 col-lg-7 col-xs-12 col-md-7 col-md-offset-1 col-sm-offset-3 col-sm-7 mx-auto" style="margin-top: -80px;">
+                    <h2>Kanban Reordering Rule Details</h2>
+                    <b>Name:</b> <span id="krr_name"></span><br/>
+                    <b>Product:</b> <span id="krr_product"></span><br/>
+                    <b>Vendor:</b> <span id="krr_vendor"></span><br/>
+                    <b>Quantity:</b> <span id="krr_quantity"></span><br/>
+                    <br/>
+                    <button type="button" id="confirm_button" class="btn btn-primary">Confirm</button>
+                    <button type="button" id="cancel_scan" class="btn btn-danger">Cancel</button>
+                    <div id="purchase_details">
+                        <h3>Purchase Details</h3>
+                        <table id='purchase_table' class="table table-fixed" style="overflow:auto; height:300px; width:600px; display:block;">
+                            <tr>
+                                <th>Type</th>
+                                <th>Number</th>
+                                <th>Vendor</th>
+                                <th>Order Qty</th>
+                                <th>Qty Received</th>
+                                <th>Sched Date</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mx-auto" id="barcode_receipt">
+                <div class="col-lg-offset-3 col-lg-7 col-xs-12 col-md-7 col-md-offset-1 col-sm-offset-3 col-sm-7 mx-auto" style="margin-top: -80px;">
+                    <h2>Receipt Details</h2>
+                    <b>Source:</b> <span id="receipt_source"></span><br/>
+                    <b>Coupa PO No:</b> <span id="receipt_coupa"></span><br/>
+                    <br/>
+                    <button type="button" id="confirm_receipt" class="btn btn-primary">Confirm</button>
+                    <button type="button" id="cancel_scan" class="btn btn-danger">Cancel</button>
+                    <br/><br/>
+                    <div id="receip_details">
+                        <table id='receipt_table' class="table table-fixed" style="overflow:auto; height:300px; width:600px; display:block;">
+                            <tr>
+                                <th>Number</th>
+                                <th>Source Location</th>
+                                <th>Destination Location</th>
+                                <th>Scheduled Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
