@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+
+        <record id="octopart_seller_detail_form_view" model="ir.ui.view">
+            <field name="name">octopart.seller.detail.form</field>
+            <field name="model">octopart.seller.detail</field>
+            <field name="arch" type="xml">
+                <form string="Fetch Seller Detail">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="product_tmpl_id"/>
+                            <field name="uid"/>
+                            <field name="sku"/>
+                            <field name="stock"/>
+                            <field name="min_qty"/>
+                            <field name="pkg"/>
+                            <field name="currency_id"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="qty_1"/>
+                            <field name="qty_10"/>
+                            <field name="qty_100"/>
+                            <field name="qty_1000"/>
+                            <field name="qty_10000"/>
+                            <field name="last_updated"/>
+                            <field name="product_tmpl_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="octopart_seller_detail_tree_view" model="ir.ui.view">
+            <field name="name">octopart.seller.detail.tree</field>
+            <field name="model">octopart.seller.detail</field>
+            <field name="arch" type="xml">
+                <tree string="Fetch Seller Detail" create="false" edit="false">
+                    <field name="product_tmpl_id"/>
+                    <field name="octopart_pricelist_id"/>
+                    <field name="name"/>
+                    <field name="uid" invisible="1"/>
+                    <field name="sku"/>
+                    <field name="stock"/>
+                    <field name="min_qty"/>
+                    <field name="pkg"/>
+                    <field name="currency_id"/>
+                    <field name="qty_1"/>
+                    <field name="qty_10"/>
+                    <field name="qty_100"/>
+                    <field name="qty_1000"/>
+                    <field name="qty_10000"/>
+                    <field name="last_updated"/>
+                    <field name="product_tmpl_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_octopart_seller_detail"
+                model="ir.actions.act_window">
+            <field name="name">Octopart Seller Details</field>
+            <field name="res_model">octopart.seller.detail</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

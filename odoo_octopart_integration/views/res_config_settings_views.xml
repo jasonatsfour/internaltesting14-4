@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_purchase_octopart_settings"
+              name="Octopart Configuration"
+              parent="base.menu_administration"
+              sequence="1" action="octopart_configuration_action"/>
+
+</odoo>

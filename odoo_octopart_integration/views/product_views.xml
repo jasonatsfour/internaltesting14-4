@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_product_template_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="sku" invisible="1"/>
+                    <field name="mpn"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_product_supplierinfo_form_inherit" model="ir.ui.view">
+            <field name="name">product.supplierinfo.form.inherit</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id"
+                   ref="product.product_supplierinfo_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="before">
+                    <header>
+                        <button name="update_octopart_price"
+                                string="Update Octopart Price"
+                                type="object"/>
+                    </header>
+                </xpath>
+                <xpath expr="//form//sheet" position="inside">
+                    <notebook>
+                        <page string="Octopart" name="octopart">
+                            <group>
+                                <group>
+                                    <field name="octopart_price"
+                                           force_save="1"
+                                           readonly="1"/>
+                                    <field name="as_of"
+                                           force_save="1"
+                                           readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="octopart_status"
+                                           force_save="1"
+                                           readonly="1"/>
+                                    <field name="manual_override"/>
+                                    <field name="is_octopart_vendor"
+                                           invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_supplierinfo_tree_view_inherit" model="ir.ui.view">
+            <field name="name">product.supplierinfo.tree.view.inherit</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id"
+                   ref="product.product_supplierinfo_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price']" position="after">
+                    <field name="octopart_price"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="product_code" string="Product Code"/>
+                </xpath>
+                <field name="delay" position="after">
+                    <field name="manual_override" optional="hide"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

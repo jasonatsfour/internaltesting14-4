@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_octopart_configuration,access_octopart_configuration,model_octopart_configuration,base.group_user,1,1,1,1
+access_octopart_seller_detail,access_octopart_seller_detail,model_octopart_seller_detail,base.group_user,1,1,1,1
+access_update_octopart_price,access_update_octopart_price,model_update_octopart_price,base.group_user,1,1,1,1
+access_fetch_sellers,access_fetch_sellers,model_fetch_sellers,base.group_user,1,1,1,1
+access_fetch_seller_detail,access_fetch_seller_detail,model_fetch_seller_detail,base.group_user,1,1,1,1
+access_vendor_pricelist_create,access_vendor_pricelist_create,model_vendor_pricelist_create,base.group_user,1,1,1,1
+access_add_octopart_id,access_add_octopart_id,model_add_octopart_id,base.group_user,1,1,1,1
+access_add_octopart_wizard,access_add_octopart_wizard,model_add_octopart_wizard,base.group_user,1,1,1,1
